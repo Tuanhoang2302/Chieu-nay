@@ -1,0 +1,132 @@
+public void insertionSort(){
+        for(int i = 1; i < Size; i++){
+            int temp = arr[i];
+            int j = i - 1;
+            while (j >= 0 && arr[j] > temp){
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = temp;
+        }
+    
+   
+/////////////////////////////////////
+
+
+public void merge(int l, int m, int r){
+        int n1 = m - l + 1;
+        int n2 = r - m;
+
+        int[] arr1 = new int[n1];
+        int[] arr2 = new int[n2];
+
+        for(int i = 0; i < n1; i++){
+            arr1[i] = arr[l + i];
+        }
+
+        for (int j = 0; j < n2; j++){
+            arr2[j] = arr[m + 1 + j];
+        }
+
+        int i = 0;
+        int j = 0;
+        int k = l;
+
+        while (i < n1 && j < n2){
+            if(arr1[i] <= arr2[j]){
+                arr[k] = arr1[i];
+                i++;
+            } else {
+                arr[k] = arr2[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < n1){
+            arr[k] = arr1[i];
+            k++;
+            i++;
+        }
+
+        while (j < n2){
+            arr[k] = arr2[j];
+            k++;
+            j++;
+        }
+
+    }
+
+    public void mergeSort(int l, int r){
+        if(l < r){
+            int m = l + (r - l) / 2;
+            mergeSort(l, m);
+            mergeSort(m + 1, r);
+
+            merge(l, m, r);
+        }
+    }
+    
+///////////////////////////////////////////////////
+
+public void swap(int a, int b){
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
+    }
+
+    public void heapify(int i, int size){
+        int min = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if(left < size && arr[min] > arr[left]){
+            min = left;
+        }
+
+        if(right < size && arr[min] > arr[right]){
+            min = right;
+        }
+
+        if(min != i){
+            swap(min, i);
+            heapify(min, size);
+        }
+
+    }
+
+    public void heapSort(){
+        for(int i = Size / 2 - 1; i >=0; i--){
+            heapify(i, Size);
+        }
+
+        for(int i = Size - 1; i >= 0; i--){
+            swap(0, i);
+            heapify(0, i);
+        }
+    }
+    
+ /////////////////////////////////////////////////
+ 
+ public int partition(int low, int high){
+        int pivot = arr[high];
+        int i = low - 1;
+
+        for(int j = low; j < high; j++){
+            if(arr[j] < pivot){
+                i++;
+                swap(i, j);
+            }
+        }
+        swap(i + 1, high);
+
+        return i + 1;
+    }
+
+    public void quickSort(int low, int high){
+        if(low < high){
+            int pi = partition(low, high);
+            quickSort(low, pi -1);
+            quickSort(pi + 1, high);
+        }
+    }
